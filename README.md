@@ -87,3 +87,32 @@ npm run build
 ## Documentacao
 
 O escopo inicial esta em [`docs/escopo-inicial.md`](docs/escopo-inicial.md).
+
+
+## Dominio inicial
+
+Apos aprovacao da fundacao, o backend recebeu um modelo JPA inicial com:
+
+- `Paciente`
+- `ProfissionalSaude`
+- `Consulta`
+- `StatusConsulta`
+
+Endpoints REST iniciais:
+
+```text
+GET  /api/pacientes
+GET  /api/pacientes/{id}
+POST /api/pacientes
+
+GET  /api/profissionais-saude
+GET  /api/profissionais-saude/{id}
+POST /api/profissionais-saude
+
+GET  /api/consultas
+GET  /api/consultas/{id}
+POST /api/consultas
+```
+
+Enquanto a autenticacao JWT nao estiver implementada, esses endpoints ficam liberados
+na configuracao de seguranca para facilitar validacao local do dominio.

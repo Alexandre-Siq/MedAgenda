@@ -20,6 +20,11 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.GET, "/api/health").permitAll()
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .requestMatchers(
+                    "/api/pacientes/**",
+                    "/api/profissionais-saude/**",
+                    "/api/consultas/**"
+                ).permitAll()
                 .anyRequest().authenticated()
             );
 

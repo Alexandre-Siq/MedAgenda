@@ -54,3 +54,21 @@ Componentes iniciais:
 - Definir contratos REST iniciais.
 - Definir configuracao de ambientes para banco PostgreSQL.
 - Evoluir a landing page para fluxo de cadastro/interesse quando o produto exigir.
+
+
+## Evolucao aprovada: dominio inicial
+
+Com a aprovacao para prosseguir apos a fundacao, o primeiro recorte de dominio
+passa a cobrir:
+
+- Pacientes, com dados cadastrais essenciais.
+- Profissionais de saude, com registro de conselho e especialidade.
+- Consultas, relacionando paciente, profissional, periodo, status e observacoes.
+
+O modelo foi mantido deliberadamente enxuto para permitir validacao rapida antes
+de adicionar regras mais complexas, como horarios de atendimento, unidades,
+convenios, prontuario, recorrencia ou notificacoes.
+
+Endpoints iniciais foram criados para listagem, busca por ID e criacao desses
+recursos. A autenticacao JWT segue como proximo passo de seguranca antes de
+expor fluxos sensiveis em ambientes reais.
