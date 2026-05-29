@@ -10,7 +10,6 @@ function Brand({ compact = false, to = '/' }) {
       {!compact && (
         <span className="brand-text">
           <strong>MedAgenda</strong>
-          <small>TCC + ADS</small>
         </span>
       )}
     </Link>
