@@ -6,7 +6,7 @@ backend e PostgreSQL local.
 ## Pré-requisitos
 
 - Java 21
-- Maven
+- Maven ou Maven Wrapper, já versionado em `backend/`
 - Node.js 20 ou superior
 - Docker Desktop
 
@@ -40,14 +40,18 @@ Em outro terminal:
 
 ```bash
 cd backend
-mvn spring-boot:run -Dspring-boot.run.profiles=local
+./mvnw spring-boot:run -Dspring-boot.run.profiles=local
 ```
 
-No PowerShell, se o comando acima não reconhecer a propriedade `-D`, use:
+### No Windows PowerShell
+
+Se você não tem Maven instalado, use o Maven Wrapper que vem no projeto:
 
 ```powershell
-mvn spring-boot:run "-Dspring-boot.run.profiles=local"
+.\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=local"
 ```
+
+Na primeira execução ele baixa o Maven automaticamente. O pré-requisito é ter Java instalado.
 
 O perfil `local`:
 

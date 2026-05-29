@@ -121,12 +121,22 @@ Resumo rápido:
 docker compose up -d postgres
 
 cd backend
-mvn spring-boot:run -Dspring-boot.run.profiles=local
+./mvnw spring-boot:run -Dspring-boot.run.profiles=local
 
 cd ../frontend
 npm install
 npm run dev
 ```
+
+### Windows sem Maven instalado
+
+Dentro da pasta `backend`, use o Maven Wrapper:
+
+```powershell
+.\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=local"
+```
+
+Na primeira execução ele baixa o Maven automaticamente. Você só precisa ter Java instalado.
 
 Credenciais de demonstração criadas pelo perfil `local`:
 
@@ -141,7 +151,7 @@ Backend:
 
 ```bash
 cd backend
-mvn -DskipTests package
+./mvnw -DskipTests package
 ```
 
 Frontend:
