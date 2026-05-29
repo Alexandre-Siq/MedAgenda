@@ -144,3 +144,31 @@ Papeis iniciais de usuario:
 - `ADMIN`
 - `PROFISSIONAL`
 - `RECEPCAO`
+
+
+## Prototipo visual local
+
+O frontend possui fluxos navegaveis para demonstracao academica, com dados
+mockados e sem depender de integracao completa com a API:
+
+```text
+/                Landing page
+/login           Login visual do medico
+/dashboard       Painel geral do medico
+/agenda          Agenda semanal
+/pacientes       Lista de pacientes
+/chatbot         Chatbot do paciente
+/configuracoes   Configuracoes do medico e chatbot
+```
+
+Para demonstrar localmente:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Abra o endereco exibido pelo Vite e navegue pelos CTAs da landing page. O login
+aceita qualquer envio e redireciona para o painel medico, pois nesta etapa o
+objetivo e apresentar interface e fluxo de produto.

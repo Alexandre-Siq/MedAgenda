@@ -1,7 +1,11 @@
-function FeatureCard({ eyebrow, title, description }) {
+function FeatureCard({ icon: Icon, title, description }) {
   return (
     <article className="feature-card">
-      <span className="feature-eyebrow">{eyebrow}</span>
+      {Icon && (
+        <span className="feature-icon" aria-hidden="true">
+          <Icon size={18} />
+        </span>
+      )}
       <h3>{title}</h3>
       <p>{description}</p>
     </article>

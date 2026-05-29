@@ -87,3 +87,25 @@ A camada inicial de seguranca foi evoluida com:
 
 O `JWT_SECRET` deve ser definido por ambiente antes de qualquer uso fora de
 desenvolvimento local.
+
+
+## Evolucao aprovada: prototipo visual navegavel
+
+A interface foi adaptada para apoiar apresentacao local do projeto, priorizando
+clareza visual e fluxo de navegacao sobre integracao completa. A identidade usa
+um tema clinico minimalista com fundo off-white, cards brancos, teal como cor
+principal e bordas sutis em vez de sombras pesadas.
+
+Telas disponiveis:
+
+- Landing page com proposta de valor e CTAs para medico e paciente.
+- Login visual do medico.
+- Painel geral com cards estatisticos e agenda do dia.
+- Agenda semanal com slots disponiveis e ocupados.
+- Lista de pacientes com busca e acoes visuais.
+- Chatbot do paciente com mensagens, chips e sugestoes de horario.
+- Configuracoes do perfil medico e mensagem inicial do chatbot.
+
+Os dados sao mockados para permitir demonstracao imediata ao professor. A
+integracao com autenticao e APIs reais pode ser feita gradualmente apos a
+validacao visual dos fluxos.
