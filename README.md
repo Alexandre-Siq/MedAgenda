@@ -1,21 +1,21 @@
 # MedAgenda
 
-Fundacao inicial do MedAgenda, uma plataforma para organizar agendas medicas,
-pacientes e fluxos operacionais de atendimento em clinicas.
+Fundação inicial do MedAgenda, uma plataforma para organizar agendas médicas,
+pacientes e fluxos operacionais de aténdimento em clínicas.
 
 ## Estrutura
 
 ```text
-backend/   API Java Spring Boot
+backend/   API Jáva Spring Boot
 frontend/  Landing page React com Vite
-docs/      Documentacao inicial do produto
+docs/      Documentação inicial do produto
 ```
 
 ## Backend
 
 Stack inicial:
 
-- Java 21
+- Jáva 21
 - Spring Boot
 - Spring Web
 - Spring Data JPA
@@ -32,8 +32,8 @@ Pacotes criados:
 - `entity`
 - `security`
 
-> Observacao: nenhuma entidade JPA foi criada nesta etapa. O pacote `entity`
-> esta reservado para a modelagem futura apos aprovacao.
+> Observação: nenhuma entidade JPA foi criada nesta etapa. O pacote `entity`
+> está reservado para a modelagem futura após aprovação.
 
 ### Executar localmente
 
@@ -86,14 +86,14 @@ cd frontend
 npm run build
 ```
 
-## Documentacao
+## Documentação
 
-O escopo inicial esta em [`docs/escopo-inicial.md`](docs/escopo-inicial.md).
+O escopo inicial está em [`docs/escopo-inicial.md`](docs/escopo-inicial.md).
 
 
-## Dominio inicial
+## Domínio inicial
 
-Apos aprovacao da fundacao, o backend recebeu um modelo JPA inicial com:
+Após aprovação da fundação, o backend recebeu um modelo JPA inicial com:
 
 - `Paciente`
 - `ProfissionalSaude`
@@ -107,22 +107,22 @@ GET  /api/pacientes
 GET  /api/pacientes/{id}
 POST /api/pacientes
 
-GET  /api/profissionais-saude
-GET  /api/profissionais-saude/{id}
-POST /api/profissionais-saude
+GET  /api/profissionais-saúde
+GET  /api/profissionais-saúde/{id}
+POST /api/profissionais-saúde
 
 GET  /api/consultas
 GET  /api/consultas/{id}
 POST /api/consultas
 ```
 
-Enquanto a autenticacao JWT nao estiver implementada, esses endpoints ficam liberados
-na configuracao de seguranca para facilitar validacao local do dominio.
+Enquanto a autenticação JWT não estiver implementada, esses endpoints ficam liberados
+na configuração de seguranca para facilitar validação local do domínio.
 
 
-## Autenticacao JWT
+## Autenticação JWT
 
-A API possui um fluxo inicial de autenticacao com BCrypt e JWT:
+A API possui um fluxo inicial de autenticação com BCrypt e JWT:
 
 ```text
 POST /api/auth/register
@@ -135,30 +135,30 @@ O cadastro retorna um token Bearer para uso no header:
 Authorization: Bearer <accessToken>
 ```
 
-Os endpoints de dominio (`/api/pacientes`, `/api/profissionais-saude` e
-`/api/consultas`) agora exigem autenticacao. O endpoint `GET /api/health`
+Os endpoints de domínio (`/api/pacientes`, `/api/profissionais-saúde` e
+`/api/consultas`) agora exigem autenticação. O endpoint `GET /api/health`
 permanece publico.
 
-Papeis iniciais de usuario:
+Papéis iniciais de usuário:
 
 - `ADMIN`
 - `PROFISSIONAL`
 - `RECEPCAO`
 
 
-## Prototipo visual local
+## Protótipo visual local
 
-O frontend possui fluxos navegaveis para demonstracao academica, com dados
-mockados e sem depender de integracao completa com a API:
+O frontend possui fluxos navegáveis para demonstração acadêmica, com dados
+mockados e sem depender de integração completa com a API:
 
 ```text
 /                Landing page
-/login           Login visual do medico
-/dashboard       Painel geral do medico
+/login           Login visual do médico
+/dashboard       Painel geral do médico
 /agenda          Agenda semanal
 /pacientes       Lista de pacientes
 /chatbot         Chatbot do paciente
-/configuracoes   Configuracoes do medico e chatbot
+/configurações   Configurações do médico e chatbot
 ```
 
 Para demonstrar localmente:
@@ -169,6 +169,6 @@ npm install
 npm run dev
 ```
 
-Abra o endereco exibido pelo Vite e navegue pelos CTAs da landing page. O login
-aceita qualquer envio e redireciona para o painel medico, pois nesta etapa o
+Abra o endereço exibido pelo Vite e navegue pelos CTAs da landing page. O login
+aceita qualquer envio e redireciona para o painel médico, pois nesta etapa o
 objetivo e apresentar interface e fluxo de produto.

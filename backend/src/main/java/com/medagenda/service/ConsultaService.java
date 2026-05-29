@@ -34,7 +34,7 @@ public class ConsultaService {
     @Transactional(readOnly = true)
     public Consulta buscarPorId(Long id) {
         return consultaRepository.findById(id)
-            .orElseThrow(() -> new RecursoNaoEncontradoException("Consulta nao encontrada"));
+            .orElseThrow(() -> new RecursoNaoEncontradoException("Consulta não encontrada"));
     }
 
     @Transactional
@@ -50,7 +50,7 @@ public class ConsultaService {
 
     private void validarPeriodo(LocalDateTime inicioEm, LocalDateTime fimEm) {
         if (!fimEm.isAfter(inicioEm)) {
-            throw new RegraNegocioException("O fim da consulta deve ser posterior ao inicio");
+            throw new RegraNegocioException("O fim da consulta deve ser posterior ao início");
         }
     }
 }

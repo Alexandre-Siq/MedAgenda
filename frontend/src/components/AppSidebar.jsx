@@ -4,15 +4,15 @@ import Brand from './Brand.jsx';
 
 const menuItems = [
   { label: 'Painel Geral', to: '/dashboard', icon: LayoutDashboard },
-  { label: 'Agenda Semanal', to: '/agenda', icon: CalendarDays },
+  { label: 'Agenda semanal', to: '/agenda', icon: CalendarDays },
   { label: 'Pacientes', to: '/pacientes', icon: Users },
   { label: 'Chatbot (Preview)', to: '/chatbot', icon: Bot },
-  { label: 'Configuracoes', to: '/configuracoes', icon: Settings },
+  { label: 'Configurações', to: '/configuracoes', icon: Settings },
 ];
 
 function AppSidebar({ onNavigate }) {
   return (
-    <aside className="app-sidebar" aria-label="Navegacao do medico">
+    <aside className="app-sidebar" aria-label="Navegação do médico">
       <div className="sidebar-header">
         <Brand to="/dashboard" />
       </div>

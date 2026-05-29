@@ -38,12 +38,12 @@ function ChatbotPage() {
                 <p className="message-bubble">{message.text}</p>
               </div>
             ))}
-            <div className="chip-group" aria-label="Opcoes de conversa">
+            <div className="chip-group" aria-label="Opções de conversa">
               <button type="button">Cardiologia</button>
               <button type="button">Retorno</button>
               <button type="button">Primeira consulta</button>
             </div>
-            <div className="slot-chip-grid" aria-label="Horarios sugeridos">
+            <div className="slot-chip-grid" aria-label="Horários sugeridos">
               {chatSlots.map((slot) => <button type="button" key={slot}>{slot}</button>)}
             </div>
           </div>

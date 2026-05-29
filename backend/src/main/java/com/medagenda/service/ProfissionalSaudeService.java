@@ -23,7 +23,7 @@ public class ProfissionalSaudeService {
     @Transactional(readOnly = true)
     public ProfissionalSaude buscarPorId(Long id) {
         return profissionalSaudeRepository.findById(id)
-            .orElseThrow(() -> new RecursoNaoEncontradoException("Profissional de saude nao encontrado"));
+            .orElseThrow(() -> new RecursoNaoEncontradoException("Profissional de saúde não encontrado"));
     }
 
     @Transactional
@@ -33,7 +33,7 @@ public class ProfissionalSaudeService {
             .isPresent();
 
         if (registroEmUso) {
-            throw new RegraNegocioException("Ja existe profissional cadastrado com este registro");
+            throw new RegraNegocioException("Já existe profissional cadastrado com este registro");
         }
 
         return profissionalSaudeRepository.save(profissionalSaude);

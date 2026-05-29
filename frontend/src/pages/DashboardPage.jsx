@@ -20,7 +20,7 @@ function DashboardPage() {
         <section className="page-intro">
           <span className="section-label">Painel geral</span>
           <h1>Bom dia, Dr. Ricardo.</h1>
-          <p>Resumo demonstrativo da agenda, pendencias e consultas confirmadas.</p>
+          <p>Resumo demonstrativo da agenda, pendências e consultas confirmadas.</p>
         </section>
 
         <section className="stats-grid">

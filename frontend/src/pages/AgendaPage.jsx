@@ -11,13 +11,13 @@ function AgendaPage() {
     <>
       <PageHeader
         breadcrumbs={['Dashboard', 'Agenda Semanal']}
-        actions={<button className="btn btn-primary btn-sm" type="button" onClick={() => setModalOpen(true)}><Plus size={15} /> Novo horario</button>}
+        actions={<button className="btn btn-primary btn-sm" type="button" onClick={() => setModalOpen(true)}><Plus size={15} /> Novo horário</button>}
       />
       <main className="content-area">
         <section className="page-intro compact">
           <span className="section-label">Disponibilidade</span>
           <h1>Agenda semanal</h1>
-          <p>Visualizacao mockada para demonstrar slots disponiveis e horarios ocupados.</p>
+          <p>Visualização mockada para demonstrar slots disponíveis e horários ocupados.</p>
         </section>
 
         <section className="week-grid">
@@ -42,20 +42,20 @@ function AgendaPage() {
 
       {modalOpen && (
         <div className="modal-overlay" role="presentation" onClick={() => setModalOpen(false)}>
-          <section className="modal-card" role="dialog" aria-modal="true" aria-label="Novo horario" onClick={(event) => event.stopPropagation()}>
+          <section className="modal-card" role="dialog" aria-modal="true" aria-label="Novo horário" onClick={(event) => event.stopPropagation()}>
             <div className="panel-title-row">
               <div>
                 <span className="section-label">Agenda</span>
-                <h2>Novo horario</h2>
+                <h2>Novo horário</h2>
               </div>
               <button className="btn btn-secondary btn-sm" type="button" onClick={() => setModalOpen(false)}>Fechar</button>
             </div>
             <form className="form-grid">
               <label><span>Data</span><input type="date" defaultValue="2026-05-29" /></label>
-              <label><span>Hora inicio</span><input type="time" defaultValue="09:00" /></label>
+              <label><span>Hora início</span><input type="time" defaultValue="09:00" /></label>
               <label><span>Hora fim</span><input type="time" defaultValue="09:30" /></label>
               <label><span>Tipo</span><select defaultValue="Consulta"><option>Consulta</option><option>Retorno</option><option>Teleconsulta</option></select></label>
-              <button className="btn btn-primary full-span" type="button" onClick={() => setModalOpen(false)}>Salvar horario</button>
+              <button className="btn btn-primary full-span" type="button" onClick={() => setModalOpen(false)}>Salvar horário</button>
             </form>
           </section>
         </div>

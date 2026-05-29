@@ -42,7 +42,7 @@ public class AuthService {
         String emailNormalizado = normalizarEmail(email);
 
         if (usuarioRepository.existsByEmail(emailNormalizado)) {
-            throw new RegraNegocioException("Ja existe usuario cadastrado com este e-mail");
+            throw new RegraNegocioException("Já existe usuário cadastrado com este e-mail");
         }
 
         Usuario usuario = new Usuario(
@@ -66,7 +66,7 @@ public class AuthService {
         );
 
         Usuario usuario = usuarioRepository.findByEmail(emailNormalizado)
-            .orElseThrow(() -> new RecursoNaoEncontradoException("Usuario nao encontrado"));
+            .orElseThrow(() -> new RecursoNaoEncontradoException("Usuário não encontrado"));
 
         return gerarResposta(usuario);
     }

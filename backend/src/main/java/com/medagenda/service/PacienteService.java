@@ -23,13 +23,13 @@ public class PacienteService {
     @Transactional(readOnly = true)
     public Paciente buscarPorId(Long id) {
         return pacienteRepository.findById(id)
-            .orElseThrow(() -> new RecursoNaoEncontradoException("Paciente nao encontrado"));
+            .orElseThrow(() -> new RecursoNaoEncontradoException("Paciente não encontrado"));
     }
 
     @Transactional
     public Paciente criar(Paciente paciente) {
         if (paciente.getCpf() != null && pacienteRepository.findByCpf(paciente.getCpf()).isPresent()) {
-            throw new RegraNegocioException("Ja existe paciente cadastrado com este CPF");
+            throw new RegraNegocioException("Já existe paciente cadastrado com este CPF");
         }
 
         return pacienteRepository.save(paciente);

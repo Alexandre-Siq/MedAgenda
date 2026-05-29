@@ -30,7 +30,7 @@ public class ApiExceptionHandler {
     @ExceptionHandler(AuthenticationException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ErrorResponse handleAuthentication(AuthenticationException exception) {
-        return ErrorResponse.of("Credenciais invalidas");
+        return ErrorResponse.of("Credenciais inválidas");
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

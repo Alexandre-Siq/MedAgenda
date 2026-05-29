@@ -18,8 +18,8 @@ function LoginPage() {
         </Link>
         <div className="login-visual-card">
           <span className="visual-icon"><Stethoscope size={22} /></span>
-          <h1>Controle sua rotina clinica em poucos cliques.</h1>
-          <p>Esta tela simula o acesso do medico para demonstracao local ao professor.</p>
+          <h1>Controle sua rotina clínica em poucos cliques.</h1>
+          <p>Esta tela simula o acesso do médico para demonstração local ao professor.</p>
           <div className="visual-list">
             <span>Agenda semanal</span>
             <span>Pacientes</span>
@@ -32,9 +32,9 @@ function LoginPage() {
         <div className="login-card">
           <Brand />
           <div>
-            <span className="section-label">Acesso do medico</span>
+            <span className="section-label">Acesso do médico</span>
             <h2>Entrar no painel</h2>
-            <p>Use qualquer e-mail e senha para navegar no prototipo visual.</p>
+            <p>Use qualquer e-mail e senha para navegar no protótipo visual.</p>
           </div>
           <form className="form-stack" onSubmit={handleSubmit}>
             <label>

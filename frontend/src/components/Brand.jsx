@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function Brand({ compact = false, to = '/' }) {
   return (
-    <Link className="brand-lockup" to={to} aria-label="MedAgenda inicio">
+    <Link className="brand-lockup" to={to} aria-label="MedAgenda início">
       <span className="brand-icon" aria-hidden="true">
         <Stethoscope size={18} strokeWidth={2.4} />
       </span>

@@ -4,7 +4,7 @@ const features = [
   {
     eyebrow: 'Agenda',
     title: 'Organizacao clara',
-    description: 'Visualize horarios, profissionais e atendimentos com foco na rotina da clinica.',
+    description: 'Visualize horários, profissionais e atendimentos com foco na rotina da clínica.',
   },
   {
     eyebrow: 'Pacientes',
@@ -14,7 +14,7 @@ const features = [
   {
     eyebrow: 'Operacao',
     title: 'Base segura',
-    description: 'Fundacao pensada para evoluir com autenticao, regras de negocio e dados clinicos.',
+    description: 'Fundação pensada para evoluir com autenticação, regras de negócio e dados clínicos.',
   },
 ];
 
@@ -22,11 +22,11 @@ function HeroSection() {
   return (
     <section className="hero">
       <div className="hero-content">
-        <p className="hero-kicker">Plataforma para gestao de agendas medicas</p>
-        <h1>Menos atrito para organizar atendimentos de saude.</h1>
+        <p className="hero-kicker">Plataforma para gestão de agendas médicas</p>
+        <h1>Menos atrito para organizar atendimentos de saúde.</h1>
         <p className="hero-copy">
-          O MedAgenda nasce para centralizar rotinas de agenda, comunicacao e
-          acompanhamento operacional em uma interface limpa e confiavel.
+          O MedAgenda nasce para centralizar rotinas de agenda, comunicação e
+          acompanhamento operacional em uma interface limpa e confiável.
         </p>
         <div className="hero-actions">
           <a className="button button-primary" href="#recursos">

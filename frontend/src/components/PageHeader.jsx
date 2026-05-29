@@ -1,7 +1,7 @@
 function PageHeader({ breadcrumbs = [], actions }) {
   return (
     <header className="page-header">
-      <nav className="breadcrumbs" aria-label="Breadcrumb">
+      <nav className="breadcrumbs" aria-label="Caminho da página">
         {breadcrumbs.map((item, index) => (
           <span className={index === breadcrumbs.length - 1 ? 'current' : ''} key={item}>
             {item}

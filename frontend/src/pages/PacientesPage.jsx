@@ -32,9 +32,9 @@ function PacientesPage() {
                 <tr>
                   <th>Nome</th>
                   <th>Telefone</th>
-                  <th>Ultima consulta</th>
-                  <th>Proxima consulta</th>
-                  <th>Acoes</th>
+                  <th>Última consulta</th>
+                  <th>Próxima consulta</th>
+                  <th>Ações</th>
                 </tr>
               </thead>
               <tbody>

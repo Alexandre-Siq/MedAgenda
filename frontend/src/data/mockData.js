@@ -1,60 +1,60 @@
 export const dashboardStats = [
   { label: 'Consultas hoje', value: '12', hint: '3 em andamento', tone: 'primary' },
-  { label: 'Pendentes', value: '5', hint: 'Aguardando confirmacao', tone: 'warning' },
-  { label: 'Confirmadas', value: '18', hint: 'Proximos 7 dias', tone: 'success' },
+  { label: 'Pendentes', value: '5', hint: 'Aguardando confirmação', tone: 'warning' },
+  { label: 'Confirmadas', value: '18', hint: 'Próximos 7 dias', tone: 'success' },
 ];
 
 export const agendaDoDia = [
   { time: '08:30', patient: 'Mariana Alves', type: 'Consulta inicial', status: 'Confirmada' },
   { time: '10:00', patient: 'Carlos Mendes', type: 'Retorno', status: 'Pendente' },
   { time: '11:30', patient: 'Helena Costa', type: 'Teleconsulta', status: 'Confirmada' },
-  { time: '14:00', patient: 'Roberto Lima', type: 'Avaliacao', status: 'Cancelada' },
+  { time: '14:00', patient: 'Roberto Lima', type: 'Avaliação', status: 'Cancelada' },
 ];
 
 export const weeklySlots = [
   {
     day: 'Segunda',
     slots: [
-      { time: '08:00', label: 'Disponivel', status: 'available' },
+      { time: '08:00', label: 'Disponível', status: 'available' },
       { time: '09:00', label: 'Mariana Alves', status: 'busy' },
-      { time: '10:00', label: 'Disponivel', status: 'available' },
+      { time: '10:00', label: 'Disponível', status: 'available' },
       { time: '14:00', label: 'Carlos Mendes', status: 'busy' },
     ],
   },
   {
-    day: 'Terca',
+    day: 'Terça',
     slots: [
-      { time: '08:00', label: 'Disponivel', status: 'available' },
+      { time: '08:00', label: 'Disponível', status: 'available' },
       { time: '09:30', label: 'Helena Costa', status: 'busy' },
-      { time: '11:00', label: 'Disponivel', status: 'available' },
-      { time: '15:00', label: 'Disponivel', status: 'available' },
+      { time: '11:00', label: 'Disponível', status: 'available' },
+      { time: '15:00', label: 'Disponível', status: 'available' },
     ],
   },
   {
     day: 'Quarta',
     slots: [
-      { time: '08:30', label: 'Disponivel', status: 'available' },
+      { time: '08:30', label: 'Disponível', status: 'available' },
       { time: '10:30', label: 'Roberto Lima', status: 'busy' },
-      { time: '13:30', label: 'Disponivel', status: 'available' },
-      { time: '16:00', label: 'Disponivel', status: 'available' },
+      { time: '13:30', label: 'Disponível', status: 'available' },
+      { time: '16:00', label: 'Disponível', status: 'available' },
     ],
   },
   {
     day: 'Quinta',
     slots: [
-      { time: '09:00', label: 'Disponivel', status: 'available' },
+      { time: '09:00', label: 'Disponível', status: 'available' },
       { time: '10:00', label: 'Ana Beatriz', status: 'busy' },
-      { time: '14:30', label: 'Disponivel', status: 'available' },
-      { time: '16:30', label: 'Disponivel', status: 'available' },
+      { time: '14:30', label: 'Disponível', status: 'available' },
+      { time: '16:30', label: 'Disponível', status: 'available' },
     ],
   },
   {
     day: 'Sexta',
     slots: [
-      { time: '08:00', label: 'Disponivel', status: 'available' },
-      { time: '09:00', label: 'Disponivel', status: 'available' },
+      { time: '08:00', label: 'Disponível', status: 'available' },
+      { time: '09:00', label: 'Disponível', status: 'available' },
       { time: '11:00', label: 'Pedro Nunes', status: 'busy' },
-      { time: '15:00', label: 'Disponivel', status: 'available' },
+      { time: '15:00', label: 'Disponível', status: 'available' },
     ],
   },
 ];
@@ -68,9 +68,9 @@ export const pacientes = [
 ];
 
 export const chatMessages = [
-  { from: 'bot', text: 'Ola! Sou o assistente do MedAgenda. Posso ajudar voce a marcar uma consulta.' },
-  { from: 'user', text: 'Quero marcar uma consulta cardiologica.' },
-  { from: 'bot', text: 'Claro. Encontrei alguns horarios disponiveis para esta semana.' },
+  { from: 'bot', text: 'Olá! Sou o assistente do MedAgenda. Posso ajudar você a marcar uma consulta.' },
+  { from: 'user', text: 'Quero marcar uma consulta cardiológica.' },
+  { from: 'bot', text: 'Claro. Encontrei alguns horários disponíveis para esta semana.' },
 ];
 
 export const chatSlots = ['Seg 08:00', 'Ter 11:00', 'Qui 14:30', 'Sex 09:00'];
