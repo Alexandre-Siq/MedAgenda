@@ -17,6 +17,9 @@ server:
   port: ${SERVER_PORT:8080}
 
 app:
+  demo:
+    seed:
+      enabled: ${DEMO_DATA_ENABLED:false}
   security:
     jwt:
       secret: ${JWT_SECRET:medagenda-development-secret-key-please-change-1234567890}

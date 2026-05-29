@@ -1,21 +1,22 @@
 # MedAgenda
 
-Fundação inicial do MedAgenda, uma plataforma para organizar agendas médicas,
-pacientes e fluxos operacionais de aténdimento em clínicas.
+MedAgenda é uma plataforma em evolução para organizar agendas médicas, pacientes
+e fluxos operacionais de atendimento em clínicas. O projeto combina um backend
+Spring Boot com um frontend React/Vite navegável para demonstração acadêmica.
 
 ## Estrutura
 
 ```text
-backend/   API Jáva Spring Boot
-frontend/  Landing page React com Vite
-docs/      Documentação inicial do produto
+backend/   API Java Spring Boot
+frontend/  Interface React com Vite
+docs/      Documentação inicial e guias de execução
 ```
 
 ## Backend
 
 Stack inicial:
 
-- Jáva 21
+- Java 21
 - Spring Boot
 - Spring Web
 - Spring Data JPA
@@ -24,38 +25,64 @@ Stack inicial:
 - PostgreSQL
 - JJWT
 
-Pacotes criados:
+Pacotes principais:
 
 - `controller`
 - `service`
 - `repository`
 - `entity`
 - `security`
+- `config`
 
-> Observação: nenhuma entidade JPA foi criada nesta etapa. O pacote `entity`
-> está reservado para a modelagem futura após aprovação.
+### Domínio inicial
 
-### Executar localmente
+O backend possui um modelo JPA inicial com:
 
-```bash
-cd backend
-mvn spring-boot:run
-```
+- `Paciente`
+- `ProfissionalSaude`
+- `Consulta`
+- `StatusConsulta`
+- `Usuario`
+- `PapelUsuario`
 
-Por padrao, a API usa as variaveis:
-
-- `DATABASE_URL` (`jdbc:postgresql://localhost:5432/medagenda`)
-- `DATABASE_USERNAME` (`medagenda`)
-- `DATABASE_PASSWORD` (`medagenda`)
-- `SERVER_PORT` (`8080`)
-- `JWT_SECRET` (segredo HMAC para assinar tokens; altere fora de desenvolvimento)
-- `JWT_EXPIRATION_MINUTES` (`120`)
-
-Endpoint publico inicial:
+Endpoints REST iniciais:
 
 ```text
-GET /api/health
+GET  /api/health
+
+POST /api/auth/register
+POST /api/auth/login
+
+GET  /api/pacientes
+GET  /api/pacientes/{id}
+POST /api/pacientes
+
+GET  /api/profissionais-saude
+GET  /api/profissionais-saude/{id}
+POST /api/profissionais-saude
+
+GET  /api/consultas
+GET  /api/consultas/{id}
+POST /api/consultas
 ```
+
+Os endpoints de domínio exigem autenticação via Bearer token. O endpoint
+`GET /api/health` e os endpoints `/api/auth/**` permanecem públicos.
+
+### Autenticação JWT
+
+A API possui um fluxo inicial de autenticação com BCrypt e JWT. O login retorna
+um token para uso no header:
+
+```text
+Authorization: Bearer <accessToken>
+```
+
+Papéis iniciais de usuário:
+
+- `ADMIN`
+- `PROFISSIONAL`
+- `RECEPCAO`
 
 ## Frontend
 
@@ -63,23 +90,61 @@ Stack inicial:
 
 - React
 - Vite
-- CSS puro com identidade visual branca, teal `#009E96`, texto `#111111` e cinza `#555555`
+- React Router
+- Lucide React
+- CSS puro com tema clínico minimalista
 
-Componentes criados:
+Rotas navegáveis para demonstração:
 
-- `Header`
-- `HeroSection`
-- `FeatureCard`
+```text
+/                Página inicial
+/login           Entrada do médico
+/dashboard       Painel geral
+/agenda          Agenda semanal
+/pacientes       Lista de pacientes
+/chatbot         Chatbot do paciente
+/configuracoes   Configurações
+```
 
-### Executar localmente
+O protótipo visual usa dados mockados para permitir apresentação imediata, mesmo
+antes da integração completa entre frontend e API.
+
+## Execução local recomendada
+
+Para rodar com PostgreSQL local, backend e frontend, siga o guia:
+
+[`docs/execucao-local.md`](docs/execucao-local.md)
+
+Resumo rápido:
 
 ```bash
-cd frontend
+docker compose up -d postgres
+
+cd backend
+mvn spring-boot:run -Dspring-boot.run.profiles=local
+
+cd ../frontend
 npm install
 npm run dev
 ```
 
-### Build
+Credenciais de demonstração criadas pelo perfil `local`:
+
+```text
+E-mail: dr.ricardo@medagenda.local
+Senha: medagenda123
+```
+
+## Build
+
+Backend:
+
+```bash
+cd backend
+mvn -DskipTests package
+```
+
+Frontend:
 
 ```bash
 cd frontend
@@ -88,87 +153,5 @@ npm run build
 
 ## Documentação
 
-O escopo inicial está em [`docs/escopo-inicial.md`](docs/escopo-inicial.md).
-
-
-## Domínio inicial
-
-Após aprovação da fundação, o backend recebeu um modelo JPA inicial com:
-
-- `Paciente`
-- `ProfissionalSaude`
-- `Consulta`
-- `StatusConsulta`
-
-Endpoints REST iniciais:
-
-```text
-GET  /api/pacientes
-GET  /api/pacientes/{id}
-POST /api/pacientes
-
-GET  /api/profissionais-saúde
-GET  /api/profissionais-saúde/{id}
-POST /api/profissionais-saúde
-
-GET  /api/consultas
-GET  /api/consultas/{id}
-POST /api/consultas
-```
-
-Enquanto a autenticação JWT não estiver implementada, esses endpoints ficam liberados
-na configuração de seguranca para facilitar validação local do domínio.
-
-
-## Autenticação JWT
-
-A API possui um fluxo inicial de autenticação com BCrypt e JWT:
-
-```text
-POST /api/auth/register
-POST /api/auth/login
-```
-
-O cadastro retorna um token Bearer para uso no header:
-
-```text
-Authorization: Bearer <accessToken>
-```
-
-Os endpoints de domínio (`/api/pacientes`, `/api/profissionais-saúde` e
-`/api/consultas`) agora exigem autenticação. O endpoint `GET /api/health`
-permanece publico.
-
-Papéis iniciais de usuário:
-
-- `ADMIN`
-- `PROFISSIONAL`
-- `RECEPCAO`
-
-
-## Protótipo visual local
-
-O frontend possui fluxos navegáveis para demonstração acadêmica, com dados
-mockados e sem depender de integração completa com a API:
-
-```text
-/                Landing page
-/login           Login visual do médico
-/dashboard       Painel geral do médico
-/agenda          Agenda semanal
-/pacientes       Lista de pacientes
-/chatbot         Chatbot do paciente
-/configurações   Configurações do médico e chatbot
-```
-
-Para demonstrar localmente:
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Abra o endereço exibido pelo Vite e navegue pelos CTAs da landing page. O login
-aceita qualquer envio e redireciona para o painel médico, pois nesta etapa o
-objetivo e apresentar interface e fluxo de produto.
+- [`docs/escopo-inicial.md`](docs/escopo-inicial.md)
+- [`docs/execucao-local.md`](docs/execucao-local.md)

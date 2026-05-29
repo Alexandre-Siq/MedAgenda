@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/medagenda
+    username: medagenda
+    password: medagenda
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+app:
+  demo:
+    seed:
+      enabled: true
+  security:
+    jwt:
+      secret: medagenda-development-secret-key-please-change-1234567890
+      expiration-minutes: 120
