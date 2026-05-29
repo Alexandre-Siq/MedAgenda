@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: medagenda-backend
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/medagenda}
+    username: ${DATABASE_USERNAME:medagenda}
+    password: ${DATABASE_PASSWORD:medagenda}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: ${SERVER_PORT:8080}
