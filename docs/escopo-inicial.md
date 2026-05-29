@@ -72,3 +72,18 @@ convenios, prontuario, recorrencia ou notificacoes.
 Endpoints iniciais foram criados para listagem, busca por ID e criacao desses
 recursos. A autenticacao JWT segue como proximo passo de seguranca antes de
 expor fluxos sensiveis em ambientes reais.
+
+
+## Evolucao aprovada: autenticacao inicial
+
+A camada inicial de seguranca foi evoluida com:
+
+- Entidade `Usuario` e enum `PapelUsuario`.
+- Senhas armazenadas com hash BCrypt.
+- Cadastro e login em `/api/auth/register` e `/api/auth/login`.
+- Emissao de JWT assinado via JJWT.
+- Filtro para autenticar requisicoes com `Authorization: Bearer <token>`.
+- Protecao dos endpoints de pacientes, profissionais e consultas.
+
+O `JWT_SECRET` deve ser definido por ambiente antes de qualquer uso fora de
+desenvolvimento local.

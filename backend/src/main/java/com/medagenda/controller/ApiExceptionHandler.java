@@ -5,6 +5,7 @@ import com.medagenda.service.RegraNegocioException;
 import java.time.Instant;
 import java.util.List;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -23,6 +24,13 @@ public class ApiExceptionHandler {
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ErrorResponse handleRegraNegocio(RegraNegocioException exception) {
         return ErrorResponse.of(exception.getMessage());
+    }
+
+
+    @ExceptionHandler(AuthenticationException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorResponse handleAuthentication(AuthenticationException exception) {
+        return ErrorResponse.of("Credenciais invalidas");
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

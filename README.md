@@ -48,6 +48,8 @@ Por padrao, a API usa as variaveis:
 - `DATABASE_USERNAME` (`medagenda`)
 - `DATABASE_PASSWORD` (`medagenda`)
 - `SERVER_PORT` (`8080`)
+- `JWT_SECRET` (segredo HMAC para assinar tokens; altere fora de desenvolvimento)
+- `JWT_EXPIRATION_MINUTES` (`120`)
 
 Endpoint publico inicial:
 
@@ -116,3 +118,29 @@ POST /api/consultas
 
 Enquanto a autenticacao JWT nao estiver implementada, esses endpoints ficam liberados
 na configuracao de seguranca para facilitar validacao local do dominio.
+
+
+## Autenticacao JWT
+
+A API possui um fluxo inicial de autenticacao com BCrypt e JWT:
+
+```text
+POST /api/auth/register
+POST /api/auth/login
+```
+
+O cadastro retorna um token Bearer para uso no header:
+
+```text
+Authorization: Bearer <accessToken>
+```
+
+Os endpoints de dominio (`/api/pacientes`, `/api/profissionais-saude` e
+`/api/consultas`) agora exigem autenticacao. O endpoint `GET /api/health`
+permanece publico.
+
+Papeis iniciais de usuario:
+
+- `ADMIN`
+- `PROFISSIONAL`
+- `RECEPCAO`

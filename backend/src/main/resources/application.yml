@@ -15,3 +15,9 @@ spring:
 
 server:
   port: ${SERVER_PORT:8080}
+
+app:
+  security:
+    jwt:
+      secret: ${JWT_SECRET:medagenda-development-secret-key-please-change-1234567890}
+      expiration-minutes: ${JWT_EXPIRATION_MINUTES:120}
