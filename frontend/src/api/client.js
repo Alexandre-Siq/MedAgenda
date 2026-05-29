@@ -19,3 +19,13 @@ export async function apiRequest(path, options = {}) {
 
   return data;
 }
+
+export function authHeader(auth) {
+  if (!auth?.token) {
+    return {};
+  }
+
+  return {
+    Authorization: `${auth.tokenType ?? 'Bearer'} ${auth.token}`,
+  };
+}

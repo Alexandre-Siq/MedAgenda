@@ -106,7 +106,7 @@ Rotas navegáveis para demonstração:
 /configuracoes   Configurações
 ```
 
-O login do médico já usa o backend real em `/api/auth/login`. As demais telas ainda usam dados mockados para permitir apresentação imediata enquanto a integração completa evolui.
+O login do médico já usa o backend real em `/api/auth/login`, e a tela de pacientes lista dados reais de `/api/pacientes`. As demais telas ainda usam dados mockados para permitir apresentação imediata enquanto a integração completa evolui.
 
 ## Execução local recomendada
 
