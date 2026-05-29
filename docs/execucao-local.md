@@ -89,6 +89,17 @@ Abra no navegador:
 http://localhost:5173/
 ```
 
+## Login real
+
+Com o PostgreSQL e o backend rodando, acesse `/login` e use:
+
+```text
+E-mail: dr.ricardo@medagenda.local
+Senha: medagenda123
+```
+
+O frontend chama `POST http://localhost:8080/api/auth/login`, salva o JWT no navegador e libera as telas do médico. Se o backend estiver desligado, a tela de login exibirá erro de conexão.
+
 ## Rotas úteis para apresentação
 
 ```text

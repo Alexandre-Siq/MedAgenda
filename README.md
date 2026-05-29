@@ -106,8 +106,7 @@ Rotas navegáveis para demonstração:
 /configuracoes   Configurações
 ```
 
-O protótipo visual usa dados mockados para permitir apresentação imediata, mesmo
-antes da integração completa entre frontend e API.
+O login do médico já usa o backend real em `/api/auth/login`. As demais telas ainda usam dados mockados para permitir apresentação imediata enquanto a integração completa evolui.
 
 ## Execução local recomendada
 
@@ -137,6 +136,12 @@ Dentro da pasta `backend`, use o Maven Wrapper:
 ```
 
 Na primeira execução ele baixa o Maven automaticamente. Você só precisa ter Java instalado.
+
+Login real no frontend:
+
+- o backend deve estar rodando em `http://localhost:8080`;
+- o frontend usa `VITE_API_URL=http://localhost:8080` por padrão;
+- após entrar, o token JWT fica salvo no navegador e libera as rotas do médico.
 
 Credenciais de demonstração criadas pelo perfil `local`:
 

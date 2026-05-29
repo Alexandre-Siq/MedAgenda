@@ -1,5 +1,6 @@
-import { Bot, CalendarDays, LayoutDashboard, Settings, Users } from 'lucide-react';
+import { Bot, CalendarDays, LayoutDashboard, LogOut, Settings, Users } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../auth/AuthContext.jsx';
 import Brand from './Brand.jsx';
 
 const menuItems = [
@@ -11,6 +12,13 @@ const menuItems = [
 ];
 
 function AppSidebar({ onNavigate }) {
+  const { logout, usuario } = useAuth();
+
+  function handleLogout() {
+    logout();
+    onNavigate?.();
+  }
+
   return (
     <aside className="app-sidebar" aria-label="Navegação do médico">
       <div className="sidebar-header">
@@ -38,9 +46,12 @@ function AppSidebar({ onNavigate }) {
       <footer className="sidebar-footer">
         <span className="avatar">DR</span>
         <span>
-          <strong>Dr. Ricardo Lima</strong>
-          <small>Cardiologia</small>
+          <strong>{usuario?.nome ?? 'Dr. Ricardo Lima'}</strong>
+          <small>{usuario?.papel ?? 'PROFISSIONAL'}</small>
         </span>
+        <button className="logout-button" type="button" onClick={handleLogout} aria-label="Sair">
+          <LogOut size={15} />
+        </button>
       </footer>
     </aside>
   );

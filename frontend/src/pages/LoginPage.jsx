@@ -1,13 +1,31 @@
 import { ArrowLeft, LockKeyhole, Mail, Stethoscope } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../auth/AuthContext.jsx';
 import Brand from '../components/Brand.jsx';
 
 function LoginPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { login } = useAuth();
+  const [email, setEmail] = useState('dr.ricardo@medagenda.local');
+  const [senha, setSenha] = useState('medagenda123');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    navigate('/dashboard');
+    setError('');
+    setLoading(true);
+
+    try {
+      await login(email, senha);
+      navigate(location.state?.from?.pathname ?? '/dashboard', { replace: true });
+    } catch (exception) {
+      setError(exception.message || 'Não foi possível entrar. Verifique suas credenciais.');
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -19,11 +37,11 @@ function LoginPage() {
         <div className="login-visual-card">
           <span className="visual-icon"><Stethoscope size={22} /></span>
           <h1>Controle sua rotina clínica em poucos cliques.</h1>
-          <p>Esta tela simula o acesso do médico para demonstração local ao professor.</p>
+          <p>Esta tela usa o backend real para autenticar o médico com JWT.</p>
           <div className="visual-list">
-            <span>Agenda semanal</span>
-            <span>Pacientes</span>
-            <span>Chatbot preview</span>
+            <span>Login real</span>
+            <span>Token JWT</span>
+            <span>Rotas protegidas</span>
           </div>
         </div>
       </section>
@@ -34,26 +52,43 @@ function LoginPage() {
           <div>
             <span className="section-label">Acesso do médico</span>
             <h2>Entrar no painel</h2>
-            <p>Use qualquer e-mail e senha para navegar no protótipo visual.</p>
+            <p>Use as credenciais de demonstração criadas pelo backend local.</p>
           </div>
           <form className="form-stack" onSubmit={handleSubmit}>
             <label>
               <span>E-mail</span>
               <div className="input-with-icon">
                 <Mail size={16} />
-                <input defaultValue="dr.ricardo@medagenda.local" type="email" />
+                <input
+                  autoComplete="email"
+                  onChange={(event) => setEmail(event.target.value)}
+                  required
+                  type="email"
+                  value={email}
+                />
               </div>
             </label>
             <label>
               <span>Senha</span>
               <div className="input-with-icon">
                 <LockKeyhole size={16} />
-                <input defaultValue="medagenda123" type="password" />
+                <input
+                  autoComplete="current-password"
+                  onChange={(event) => setSenha(event.target.value)}
+                  required
+                  type="password"
+                  value={senha}
+                />
               </div>
             </label>
-            <button className="btn btn-primary full" type="submit">Entrar</button>
+            {error && <p className="form-error" role="alert">{error}</p>}
+            <button className="btn btn-primary full" disabled={loading} type="submit">
+              {loading ? 'Entrando...' : 'Entrar'}
+            </button>
           </form>
-          <a className="muted-link" href="mailto:suporte@medagenda.local">Esqueci minha senha</a>
+          <p className="login-hint">
+            Backend esperado em <strong>http://localhost:8080</strong>.
+          </p>
         </div>
       </section>
     </div>
