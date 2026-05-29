@@ -39,9 +39,9 @@ public class DemoDataConfig {
             }
 
             List<Paciente> pacientes = pacienteRepository.saveAll(List.of(
-                new Paciente("Mariana Alves", "mariana.alves@email.com", "(11) 98888-2201", "12345678901", LocalDate.of(1992, 4, 12)),
-                new Paciente("Carlos Mendes", "carlos.mendes@email.com", "(11) 97777-1902", "23456789012", LocalDate.of(1985, 8, 23)),
-                new Paciente("Helena Costa", "helena.costa@email.com", "(21) 96666-4410", "34567890123", LocalDate.of(1978, 1, 30))
+                new Paciente("Mariana Alves", "mariana.alves@email.com", "(11) 98888-2201", "52998224725", LocalDate.of(1992, 4, 12)),
+                new Paciente("Carlos Mendes", "carlos.mendes@email.com", "(11) 97777-1902", "39053344705", LocalDate.of(1985, 8, 23)),
+                new Paciente("Helena Costa", "helena.costa@email.com", "(21) 96666-4410", "11144477735", LocalDate.of(1978, 1, 30))
             ));
 
             ProfissionalSaude profissional = profissionalSaudeRepository.save(

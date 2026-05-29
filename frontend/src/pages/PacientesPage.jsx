@@ -12,12 +12,56 @@ const emptyForm = {
   dataNascimento: '',
 };
 
+function todayIsoDate() {
+  return new Date().toISOString().slice(0, 10);
+}
+
 function formatDate(value) {
   if (!value) {
     return '-';
   }
 
+  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    const [year, month, day] = value.split('-');
+    return `${day}/${month}/${year}`;
+  }
+
   return new Intl.DateTimeFormat('pt-BR').format(new Date(value));
+}
+
+function onlyDigits(value) {
+  return value.replace(/\D/g, '');
+}
+
+function cpfValido(value) {
+  const cpf = onlyDigits(value);
+
+  if (!/^\d{11}$/.test(cpf) || new Set(cpf).size === 1) {
+    return false;
+  }
+
+  function calcularDigito(tamanho) {
+    let soma = 0;
+
+    for (let index = 0; index < tamanho; index += 1) {
+      soma += Number(cpf[index]) * (tamanho + 1 - index);
+    }
+
+    const resto = (soma * 10) % 11;
+    return resto === 10 ? 0 : resto;
+  }
+
+  return Number(cpf[9]) === calcularDigito(9) && Number(cpf[10]) === calcularDigito(10);
+}
+
+function pacienteToForm(paciente) {
+  return {
+    nome: paciente.nome ?? '',
+    email: paciente.email ?? '',
+    telefone: paciente.telefone ?? '',
+    cpf: paciente.cpf ?? '',
+    dataNascimento: paciente.dataNascimento ?? '',
+  };
 }
 
 function buildPacientePayload(form) {
@@ -25,9 +69,25 @@ function buildPacientePayload(form) {
     nome: form.nome.trim(),
     email: form.email.trim() || null,
     telefone: form.telefone.trim() || null,
-    cpf: form.cpf.trim() || null,
+    cpf: onlyDigits(form.cpf) || null,
     dataNascimento: form.dataNascimento || null,
   };
+}
+
+function validarFormulario(form) {
+  if (!form.nome.trim()) {
+    return 'Informe o nome do paciente.';
+  }
+
+  if (form.cpf.trim() && !cpfValido(form.cpf)) {
+    return 'Informe um CPF válido.';
+  }
+
+  if (form.dataNascimento && form.dataNascimento > todayIsoDate()) {
+    return 'A data de nascimento não pode estar no futuro.';
+  }
+
+  return '';
 }
 
 function PacientesPage() {
@@ -36,10 +96,14 @@ function PacientesPage() {
   const [pacientes, setPacientes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState(null);
+  const [selectedPaciente, setSelectedPaciente] = useState(null);
   const [form, setForm] = useState(emptyForm);
   const [formError, setFormError] = useState('');
   const [saving, setSaving] = useState(false);
+
+  const modalOpen = Boolean(modalMode);
+  const readOnly = modalMode === 'view';
 
   useEffect(() => {
     let active = true;
@@ -93,44 +157,97 @@ function PacientesPage() {
     setForm((current) => ({ ...current, [field]: value }));
   }
 
+  function openCreateModal() {
+    setSelectedPaciente(null);
+    setForm(emptyForm);
+    setFormError('');
+    setModalMode('create');
+  }
+
+  function openViewModal(paciente) {
+    setSelectedPaciente(paciente);
+    setForm(pacienteToForm(paciente));
+    setFormError('');
+    setModalMode('view');
+  }
+
+  function openEditModal(paciente) {
+    setSelectedPaciente(paciente);
+    setForm(pacienteToForm(paciente));
+    setFormError('');
+    setModalMode('edit');
+  }
+
   function closeModal() {
     if (saving) {
       return;
     }
 
-    setModalOpen(false);
+    setModalMode(null);
+    setSelectedPaciente(null);
     setForm(emptyForm);
     setFormError('');
   }
 
-  async function handleCreatePaciente(event) {
+  async function handleSubmitPaciente(event) {
     event.preventDefault();
+
+    if (readOnly) {
+      closeModal();
+      return;
+    }
+
+    const validationMessage = validarFormulario(form);
+
+    if (validationMessage) {
+      setFormError(validationMessage);
+      return;
+    }
+
     setFormError('');
     setSaving(true);
 
     try {
-      const novoPaciente = await apiRequest('/api/pacientes', {
-        method: 'POST',
+      const isEditing = modalMode === 'edit';
+      const pacienteSalvo = await apiRequest(isEditing ? `/api/pacientes/${selectedPaciente.id}` : '/api/pacientes', {
+        method: isEditing ? 'PUT' : 'POST',
         headers: authHeader(auth),
         body: JSON.stringify(buildPacientePayload(form)),
       });
 
-      setPacientes((current) => [novoPaciente, ...current]);
+      setPacientes((current) => (
+        isEditing
+          ? current.map((paciente) => (paciente.id === pacienteSalvo.id ? pacienteSalvo : paciente))
+          : [pacienteSalvo, ...current]
+      ));
       setSearch('');
-      setModalOpen(false);
+      setModalMode(null);
+      setSelectedPaciente(null);
       setForm(emptyForm);
     } catch (exception) {
-      setFormError(exception.message || 'Não foi possível cadastrar o paciente.');
+      setFormError(exception.message || 'Não foi possível salvar o paciente.');
     } finally {
       setSaving(false);
     }
+  }
+
+  function modalTitle() {
+    if (modalMode === 'view') {
+      return 'Detalhes do paciente';
+    }
+
+    if (modalMode === 'edit') {
+      return 'Editar paciente';
+    }
+
+    return 'Novo paciente';
   }
 
   return (
     <>
       <PageHeader
         breadcrumbs={['Dashboard', 'Pacientes']}
-        actions={<button className="btn btn-primary btn-sm" type="button" onClick={() => setModalOpen(true)}><Plus size={15} /> Novo paciente</button>}
+        actions={<button className="btn btn-primary btn-sm" type="button" onClick={openCreateModal}><Plus size={15} /> Novo paciente</button>}
       />
       <main className="content-area">
         <section className="panel-card">
@@ -157,6 +274,7 @@ function PacientesPage() {
                     <th>Telefone</th>
                     <th>E-mail</th>
                     <th>CPF</th>
+                    <th>Nascimento</th>
                     <th>Cadastro</th>
                     <th>Ações</th>
                   </tr>
@@ -168,11 +286,12 @@ function PacientesPage() {
                       <td>{paciente.telefone || '-'}</td>
                       <td>{paciente.email || '-'}</td>
                       <td>{paciente.cpf || '-'}</td>
+                      <td>{formatDate(paciente.dataNascimento)}</td>
                       <td>{formatDate(paciente.criadoEm)}</td>
                       <td>
                         <div className="row-actions">
-                          <button className="icon-button" type="button" aria-label="Ver paciente"><Eye size={15} /></button>
-                          <button className="icon-button" type="button" aria-label="Editar paciente"><Pencil size={15} /></button>
+                          <button className="icon-button" type="button" aria-label="Ver paciente" onClick={() => openViewModal(paciente)}><Eye size={15} /></button>
+                          <button className="icon-button" type="button" aria-label="Editar paciente" onClick={() => openEditModal(paciente)}><Pencil size={15} /></button>
                         </div>
                       </td>
                     </tr>
@@ -189,42 +308,50 @@ function PacientesPage() {
 
       {modalOpen && (
         <div className="modal-overlay" role="presentation" onClick={closeModal}>
-          <section className="modal-card" role="dialog" aria-modal="true" aria-label="Novo paciente" onClick={(event) => event.stopPropagation()}>
+          <section className="modal-card" role="dialog" aria-modal="true" aria-label={modalTitle()} onClick={(event) => event.stopPropagation()}>
             <div className="panel-title-row">
               <div>
                 <span className="section-label">Pacientes</span>
-                <h2>Novo paciente</h2>
+                <h2>{modalTitle()}</h2>
               </div>
               <button className="btn btn-secondary btn-sm" type="button" onClick={closeModal}>Fechar</button>
             </div>
 
-            <form className="form-grid" onSubmit={handleCreatePaciente}>
+            <form className="form-grid" onSubmit={handleSubmitPaciente}>
               <label>
                 <span>Nome</span>
-                <input value={form.nome} onChange={(event) => updateForm('nome', event.target.value)} required maxLength="120" />
+                <input value={form.nome} onChange={(event) => updateForm('nome', event.target.value)} required maxLength="120" disabled={readOnly} />
               </label>
               <label>
                 <span>E-mail</span>
-                <input value={form.email} onChange={(event) => updateForm('email', event.target.value)} type="email" maxLength="160" />
+                <input value={form.email} onChange={(event) => updateForm('email', event.target.value)} type="email" maxLength="160" disabled={readOnly} />
               </label>
               <label>
                 <span>Telefone</span>
-                <input value={form.telefone} onChange={(event) => updateForm('telefone', event.target.value)} maxLength="20" placeholder="(11) 99999-9999" />
+                <input value={form.telefone} onChange={(event) => updateForm('telefone', event.target.value)} maxLength="20" placeholder="(11) 99999-9999" disabled={readOnly} />
               </label>
               <label>
                 <span>CPF</span>
-                <input value={form.cpf} onChange={(event) => updateForm('cpf', event.target.value)} maxLength="14" placeholder="Somente números ou formatado" />
+                <input value={form.cpf} onChange={(event) => updateForm('cpf', event.target.value)} maxLength="14" placeholder="Somente números ou formatado" disabled={readOnly} />
               </label>
               <label className="full-span">
                 <span>Data de nascimento</span>
-                <input value={form.dataNascimento} onChange={(event) => updateForm('dataNascimento', event.target.value)} type="date" />
+                <input value={form.dataNascimento} onChange={(event) => updateForm('dataNascimento', event.target.value)} type="date" max={todayIsoDate()} disabled={readOnly} />
               </label>
+
+              {selectedPaciente && (
+                <p className="state-message full-span">
+                  Criado em {formatDate(selectedPaciente.criadoEm)} · Atualizado em {formatDate(selectedPaciente.atualizadoEm)}
+                </p>
+              )}
 
               {formError && <p className="form-error full-span" role="alert">{formError}</p>}
 
-              <button className="btn btn-primary full-span" disabled={saving} type="submit">
-                {saving ? 'Salvando...' : 'Cadastrar paciente'}
-              </button>
+              {!readOnly && (
+                <button className="btn btn-primary full-span" disabled={saving} type="submit">
+                  {saving ? 'Salvando...' : (modalMode === 'edit' ? 'Salvar alterações' : 'Cadastrar paciente')}
+                </button>
+              )}
             </form>
           </section>
         </div>

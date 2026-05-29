@@ -56,6 +56,7 @@ POST /api/auth/login
 GET  /api/pacientes
 GET  /api/pacientes/{id}
 POST /api/pacientes
+PUT  /api/pacientes/{id}
 
 GET  /api/profissionais-saude
 GET  /api/profissionais-saude/{id}
@@ -65,6 +66,12 @@ GET  /api/consultas
 GET  /api/consultas/{id}
 POST /api/consultas
 ```
+
+Validações de pacientes:
+
+- CPF é opcional, mas quando informado deve ser válido.
+- CPF não pode ser duplicado.
+- Data de nascimento não pode estar no futuro.
 
 Os endpoints de domínio exigem autenticação via Bearer token. O endpoint
 `GET /api/health` e os endpoints `/api/auth/**` permanecem públicos.
@@ -106,7 +113,7 @@ Rotas navegáveis para demonstração:
 /configuracoes   Configurações
 ```
 
-O login do médico já usa o backend real em `/api/auth/login`, e a tela de pacientes lista e cadastra dados reais usando `/api/pacientes`. As demais telas ainda usam dados mockados para permitir apresentação imediata enquanto a integração completa evolui.
+O login do médico já usa o backend real em `/api/auth/login`, e a tela de pacientes lista, visualiza, cadastra e edita dados reais usando `/api/pacientes`. As demais telas ainda usam dados mockados para permitir apresentação imediata enquanto a integração completa evolui.
 
 ## Execução local recomendada
 

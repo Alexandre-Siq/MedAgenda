@@ -100,9 +100,9 @@ Senha: medagenda123
 
 O frontend chama `POST http://localhost:8080/api/auth/login`, salva o JWT no navegador e libera as telas do médico. Se o backend estiver desligado, a tela de login exibirá erro de conexão.
 
-## Listagem e cadastro real de pacientes
+## Listagem, visualização, edição e cadastro real de pacientes
 
-Após entrar no painel, acesse `/pacientes`. Essa tela chama `GET http://localhost:8080/api/pacientes` usando o token JWT salvo no login. O botão **Novo paciente** abre um formulário que envia `POST http://localhost:8080/api/pacientes` e atualiza a tabela após o cadastro. Com o perfil `local`, o backend também carrega pacientes de demonstração automaticamente no PostgreSQL.
+Após entrar no painel, acesse `/pacientes`. Essa tela chama `GET http://localhost:8080/api/pacientes` usando o token JWT salvo no login. O botão **Novo paciente** abre um formulário que envia `POST http://localhost:8080/api/pacientes` e atualiza a tabela após o cadastro. Os ícones da coluna **Ações** permitem visualizar detalhes e editar um cadastro existente via `PUT http://localhost:8080/api/pacientes/{id}`. A tela valida CPF e impede data de nascimento futura antes de enviar. O backend repete essas validações para proteger a API. Com o perfil `local`, o backend também carrega pacientes de demonstração automaticamente no PostgreSQL.
 
 ## Rotas úteis para apresentação
 

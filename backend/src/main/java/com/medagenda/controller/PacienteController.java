@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -52,6 +53,19 @@ public class PacienteController {
         );
 
         return PacienteResponse.fromEntity(pacienteService.criar(paciente));
+    }
+
+    @PutMapping("/{id}")
+    public PacienteResponse atualizar(@PathVariable Long id, @Valid @RequestBody PacienteRequest request) {
+        Paciente paciente = new Paciente(
+            request.nome(),
+            request.email(),
+            request.telefone(),
+            request.cpf(),
+            request.dataNascimento()
+        );
+
+        return PacienteResponse.fromEntity(pacienteService.atualizar(id, paciente));
     }
 
     public record PacienteRequest(
