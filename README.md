@@ -175,5 +175,14 @@ npm run build
 
 ## Documentação
 
-- [`docs/escopo-inicial.md`](docs/escopo-inicial.md)
-- [`docs/execucao-local.md`](docs/execucao-local.md)
+Documentos de apoio acadêmico e técnico:
+
+- [`docs/visao-e-motivacao.md`](docs/visao-e-motivacao.md): origem, problema, justificativa e objetivos do projeto.
+- [`docs/requisitos.md`](docs/requisitos.md): requisitos funcionais, não funcionais e regras de negócio.
+- [`docs/casos-de-uso.md`](docs/casos-de-uso.md): principais interações entre usuários e sistema.
+- [`docs/arquitetura.md`](docs/arquitetura.md): visão técnica da arquitetura frontend, backend, banco e segurança.
+- [`docs/modelo-dados.md`](docs/modelo-dados.md): entidades, campos, relacionamentos e regras de integridade.
+- [`docs/decisoes-tecnicas.md`](docs/decisoes-tecnicas.md): justificativas para tecnologias e decisões adotadas.
+- [`docs/roadmap.md`](docs/roadmap.md): próximos passos e evolução planejada.
+- [`docs/escopo-inicial.md`](docs/escopo-inicial.md): escopo consolidado da etapa atual.
+- [`docs/execucao-local.md`](docs/execucao-local.md): guia para rodar o projeto localmente.
