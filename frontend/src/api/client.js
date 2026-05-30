@@ -1,4 +1,5 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8080';
+export const API_BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8080';
+export const isDemoMode = import.meta.env.VITE_DEMO_MODE === 'true';
 
 export async function apiRequest(path, options = {}) {
   const response = await fetch(`${API_BASE_URL}${path}`, {

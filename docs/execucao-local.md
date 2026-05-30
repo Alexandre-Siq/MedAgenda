@@ -10,6 +10,24 @@ backend e PostgreSQL local.
 - Node.js 20 ou superior
 - Docker Desktop
 
+## Modo demo offline para apresentação
+
+Se o computador da faculdade não puder rodar backend, Docker ou PostgreSQL, use
+apenas o frontend em modo demo:
+
+```bash
+cd frontend
+npm install
+npm run dev:demo
+```
+
+Abra `http://localhost:5173/`. O login aceitará qualquer e-mail e senha
+preenchidos, e as telas protegidas ficarão disponíveis com dados simulados. A
+tela de pacientes permitirá listar, cadastrar, visualizar e editar registros em
+memória/localStorage do navegador.
+
+Esse modo serve para apresentação visual e não substitui o modo real com backend.
+
 ## 1. Atualizar o projeto
 
 ```bash

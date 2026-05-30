@@ -115,6 +115,28 @@ Rotas navegáveis para demonstração:
 
 O login do médico já usa o backend real em `/api/auth/login`, e a tela de pacientes lista, visualiza, cadastra e edita dados reais usando `/api/pacientes`. As demais telas ainda usam dados mockados para permitir apresentação imediata enquanto a integração completa evolui.
 
+## Modo demo offline
+
+Para apresentar em um computador sem backend, Docker ou PostgreSQL, use o modo
+demo do frontend:
+
+```bash
+cd frontend
+npm install
+npm run dev:demo
+```
+
+Depois acesse `http://localhost:5173/`. Nesse modo:
+
+- o login funciona sem backend;
+- as rotas protegidas abrem normalmente;
+- a tela de pacientes usa dados simulados no navegador;
+- cadastro, visualização e edição de pacientes funcionam apenas localmente;
+- nada é salvo em banco de dados.
+
+Use esse modo como plano B para apresentação acadêmica quando o computador não
+permitir rodar Java, Docker ou PostgreSQL.
+
 ## Execução local recomendada
 
 Para rodar com PostgreSQL local, backend e frontend, siga o guia:

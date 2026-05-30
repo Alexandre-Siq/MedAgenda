@@ -7,7 +7,7 @@ import Brand from '../components/Brand.jsx';
 function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login } = useAuth();
+  const { isDemoMode, login } = useAuth();
   const [email, setEmail] = useState('dr.ricardo@medagenda.local');
   const [senha, setSenha] = useState('medagenda123');
   const [error, setError] = useState('');
@@ -37,10 +37,10 @@ function LoginPage() {
         <div className="login-visual-card">
           <span className="visual-icon"><Stethoscope size={22} /></span>
           <h1>Controle sua rotina clínica em poucos cliques.</h1>
-          <p>Esta tela usa o backend real para autenticar o médico com JWT.</p>
+          <p>{isDemoMode ? 'Modo demo offline: o login libera a apresentação sem backend.' : 'Esta tela usa o backend real para autenticar o médico com JWT.'}</p>
           <div className="visual-list">
-            <span>Login real</span>
-            <span>Token JWT</span>
+            <span>{isDemoMode ? 'Login demo' : 'Login real'}</span>
+            <span>{isDemoMode ? 'Sem backend' : 'Token JWT'}</span>
             <span>Rotas protegidas</span>
           </div>
         </div>
@@ -52,7 +52,7 @@ function LoginPage() {
           <div>
             <span className="section-label">Acesso do médico</span>
             <h2>Entrar no painel</h2>
-            <p>Use as credenciais de demonstração criadas pelo backend local.</p>
+            <p>{isDemoMode ? 'Use qualquer e-mail e senha preenchidos para apresentar sem backend.' : 'Use as credenciais de demonstração criadas pelo backend local.'}</p>
           </div>
           <form className="form-stack" onSubmit={handleSubmit}>
             <label>
@@ -83,11 +83,11 @@ function LoginPage() {
             </label>
             {error && <p className="form-error" role="alert">{error}</p>}
             <button className="btn btn-primary full" disabled={loading} type="submit">
-              {loading ? 'Entrando...' : 'Entrar'}
+              {loading ? 'Entrando...' : (isDemoMode ? 'Entrar no modo demo' : 'Entrar')}
             </button>
           </form>
           <p className="login-hint">
-            Backend esperado em <strong>http://localhost:8080</strong>.
+            {isDemoMode ? 'Modo demo ativo: backend, Docker e PostgreSQL não são necessários.' : <>Backend esperado em <strong>http://localhost:8080</strong>.</>}
           </p>
         </div>
       </section>

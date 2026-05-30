@@ -1,6 +1,6 @@
 import { Eye, Pencil, Plus, Search } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
-import { apiRequest, authHeader } from '../api/client.js';
+import { apiRequest, authHeader, isDemoMode } from '../api/client.js';
 import { useAuth } from '../auth/AuthContext.jsx';
 import PageHeader from '../components/PageHeader.jsx';
 
@@ -11,6 +11,41 @@ const emptyForm = {
   cpf: '',
   dataNascimento: '',
 };
+
+const DEMO_PATIENTS_KEY = 'medagenda.demo.pacientes';
+
+const initialDemoPatients = [
+  {
+    id: 1,
+    nome: 'Mariana Alves',
+    email: 'mariana.alves@email.com',
+    telefone: '(11) 98888-2201',
+    cpf: '52998224725',
+    dataNascimento: '1992-04-12',
+    criadoEm: '2026-05-29T09:00:00.000Z',
+    atualizadoEm: '2026-05-29T09:00:00.000Z',
+  },
+  {
+    id: 2,
+    nome: 'Carlos Mendes',
+    email: 'carlos.mendes@email.com',
+    telefone: '(11) 97777-1902',
+    cpf: '39053344705',
+    dataNascimento: '1985-08-23',
+    criadoEm: '2026-05-29T09:05:00.000Z',
+    atualizadoEm: '2026-05-29T09:05:00.000Z',
+  },
+  {
+    id: 3,
+    nome: 'Helena Costa',
+    email: 'helena.costa@email.com',
+    telefone: '(21) 96666-4410',
+    cpf: '11144477735',
+    dataNascimento: '1978-01-30',
+    criadoEm: '2026-05-29T09:10:00.000Z',
+    atualizadoEm: '2026-05-29T09:10:00.000Z',
+  },
+];
 
 function todayIsoDate() {
   return new Date().toISOString().slice(0, 10);
@@ -74,6 +109,20 @@ function buildPacientePayload(form) {
   };
 }
 
+function readDemoPatients() {
+  try {
+    const stored = localStorage.getItem(DEMO_PATIENTS_KEY);
+    return stored ? JSON.parse(stored) : initialDemoPatients;
+  } catch {
+    localStorage.removeItem(DEMO_PATIENTS_KEY);
+    return initialDemoPatients;
+  }
+}
+
+function persistDemoPatients(pacientes) {
+  localStorage.setItem(DEMO_PATIENTS_KEY, JSON.stringify(pacientes));
+}
+
 function validarFormulario(form) {
   if (!form.nome.trim()) {
     return 'Informe o nome do paciente.';
@@ -111,6 +160,12 @@ function PacientesPage() {
     async function carregarPacientes() {
       setLoading(true);
       setError('');
+
+      if (isDemoMode) {
+        setPacientes(readDemoPatients());
+        setLoading(false);
+        return;
+      }
 
       try {
         const data = await apiRequest('/api/pacientes', {
@@ -209,10 +264,42 @@ function PacientesPage() {
 
     try {
       const isEditing = modalMode === 'edit';
+      const payload = buildPacientePayload(form);
+
+      if (isDemoMode) {
+        const cpfEmUso = payload.cpf && pacientes.some((paciente) => (
+          paciente.cpf === payload.cpf && paciente.id !== selectedPaciente?.id
+        ));
+
+        if (cpfEmUso) {
+          throw new Error('Já existe paciente cadastrado com este CPF');
+        }
+
+        const now = new Date().toISOString();
+        const pacienteSalvo = {
+          ...(isEditing ? selectedPaciente : { id: Date.now(), criadoEm: now }),
+          ...payload,
+          atualizadoEm: now,
+        };
+
+        setPacientes((current) => {
+          const next = isEditing
+            ? current.map((paciente) => (paciente.id === pacienteSalvo.id ? pacienteSalvo : paciente))
+            : [pacienteSalvo, ...current];
+          persistDemoPatients(next);
+          return next;
+        });
+        setSearch('');
+        setModalMode(null);
+        setSelectedPaciente(null);
+        setForm(emptyForm);
+        return;
+      }
+
       const pacienteSalvo = await apiRequest(isEditing ? `/api/pacientes/${selectedPaciente.id}` : '/api/pacientes', {
         method: isEditing ? 'PUT' : 'POST',
         headers: authHeader(auth),
-        body: JSON.stringify(buildPacientePayload(form)),
+        body: JSON.stringify(payload),
       });
 
       setPacientes((current) => (
@@ -253,7 +340,7 @@ function PacientesPage() {
         <section className="panel-card">
           <div className="panel-title-row">
             <div>
-              <span className="section-label">Cadastro real</span>
+              <span className="section-label">{isDemoMode ? 'Cadastro demo' : 'Cadastro real'}</span>
               <h1>Pacientes</h1>
             </div>
             <div className="search-box">
@@ -262,7 +349,10 @@ function PacientesPage() {
             </div>
           </div>
 
-          {loading && <p className="state-message">Carregando pacientes do backend...</p>}
+          {loading && <p className="state-message">Carregando pacientes...</p>}
+          {isDemoMode && !loading && !error && (
+            <p className="state-message">Modo demo offline ativo: os pacientes são salvos apenas neste navegador.</p>
+          )}
           {error && <p className="form-error" role="alert">{error}</p>}
 
           {!loading && !error && (
