@@ -199,6 +199,8 @@ npm run build
 
 Documentos de apoio acadêmico e técnico:
 
+Versões em Word (`.docx`) estão disponíveis em [`docs/docx/`](docs/docx/).
+
 - [`docs/visao-e-motivacao.md`](docs/visao-e-motivacao.md): origem, problema, justificativa e objetivos do projeto.
 - [`docs/requisitos.md`](docs/requisitos.md): requisitos funcionais, não funcionais e regras de negócio.
 - [`docs/casos-de-uso.md`](docs/casos-de-uso.md): principais interações entre usuários e sistema.
