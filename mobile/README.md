@@ -17,7 +17,8 @@ cotacoes reais pela API publica da Brapi.
 App.js
 src/
   database/
-    database.js
+    database.native.js
+    database.web.js
   screens/
     HomeScreen.js
     TradeScreen.js
@@ -27,7 +28,8 @@ src/
 
 ## Banco SQLite
 
-A tabela `transactions` e criada automaticamente na inicializacao:
+A tabela `transactions` e criada automaticamente na inicializacao no Android/iOS
+via `expo-sqlite`:
 
 ```sql
 CREATE TABLE IF NOT EXISTS transactions (
@@ -39,6 +41,10 @@ CREATE TABLE IF NOT EXISTS transactions (
   date TEXT NOT NULL
 );
 ```
+
+No Expo Web, a camada `database.web.js` mantem a mesma API usando
+`localStorage`, evitando quebra da apresentacao no navegador quando o bundle web
+nao consegue carregar o WASM interno do SQLite.
 
 ## API de cotacoes
 

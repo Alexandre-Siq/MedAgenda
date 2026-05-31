@@ -98,7 +98,8 @@ Stack adicionada para apresentacao academica de uma carteira de investimentos:
 Principais arquivos:
 
 - `mobile/App.js`
-- `mobile/src/database/database.js`
+- `mobile/src/database/database.native.js`
+- `mobile/src/database/database.web.js`
 - `mobile/src/services/brapi.js`
 - `mobile/src/screens/HomeScreen.js`
 - `mobile/src/screens/TradeScreen.js`
