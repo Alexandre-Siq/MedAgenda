@@ -8,6 +8,7 @@ pacientes e fluxos operacionais de atendimento em clinicas.
 ```text
 backend/   API Java Spring Boot
 frontend/  Landing page React com Vite
+mobile/    App Expo React Native para carteira de investimentos
 docs/      Documentacao inicial do produto
 ```
 
@@ -82,6 +83,40 @@ npm run dev
 ```bash
 cd frontend
 npm run build
+```
+
+## Mobile
+
+Stack adicionada para apresentacao academica de uma carteira de investimentos:
+
+- Expo + React Native
+- React Navigation com Bottom Tabs
+- expo-sqlite para registrar compras e vendas
+- fetch API nativo consumindo `https://brapi.dev/api/quote/{ticker}`
+- Dark theme minimalista
+
+Principais arquivos:
+
+- `mobile/App.js`
+- `mobile/src/database/database.native.js`
+- `mobile/src/database/database.web.js`
+- `mobile/src/services/brapi.js`
+- `mobile/src/screens/HomeScreen.js`
+- `mobile/src/screens/TradeScreen.js`
+
+### Executar localmente
+
+```bash
+cd mobile
+npm install
+npm run android
+```
+
+Para Expo Web:
+
+```bash
+cd mobile
+npm run web
 ```
 
 ## Documentacao
